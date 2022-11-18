@@ -6,8 +6,7 @@ const path = require('path');
 const PORT = process.env.PORT || 3001;
 
 const app = express();
-// Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+
 
 //connect to database
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
@@ -22,6 +21,9 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 let User = require('../modules/user-schema');
 let Post = require('../modules/post-schema');
 
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+
 app.get("/api", (req, res) => {
     res.json({message: "Hello world!"});
 });
@@ -32,34 +34,34 @@ app.get("/api", (req, res) => {
     res.send("searching for username: AminaTesting!");
     let id = "AminaTesting";
     const result = User.findOne({username: id}).exec().then(function(result){
-        console.log(result)
-      })
-})
+        console.log(result);
+      });
+});
 
 //testing user records -> searching for all users in the database
 app.get('/usersList', (req, res) => {
     res.send("Searching for all User Records!");
     const result = User.find().exec().then(function(result){
-        console.log(result)
-      })
-})
+        console.log(result);
+      });
+});
 
 //testing user posts -> searching for a specific post by a user
 app.get('/posts', (req, res) => {
   res.send("searching for post by AminaTesting!");
   let id = "AminaTesting";
   const result = Post.findOne({username: id}).exec().then(function(result){
-      console.log(result)
-    })
-})
+      console.log(result);
+    });
+});
 
 //testing user posts -> searching for all posts in the database
 app.get('/postsList', (req, res) => {
   res.send("Searching for all User Records!");
   const result = Post.find().exec().then(function(result){
-      console.log(result)
-    })
-})
+      console.log(result);
+    });
+});
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
