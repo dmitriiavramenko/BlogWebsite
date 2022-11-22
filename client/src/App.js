@@ -1,6 +1,6 @@
 import React from "react";
-import logo from './logo.svg';
 import './App.css';
+import { Route, Routes} from "react-router-dom"
 
 function App() {
   const [data, setData] = React.useState(null);
@@ -12,6 +12,16 @@ function App() {
   }, []);
 
   return (
+  <Routes>
+    <Route path="/" element={<h1>{data}</h1>}/>
+    <Route path="/login" element={<h1>Login</h1>}/>
+  </Routes>
+  )
+}
+
+
+/** 
+  (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -22,6 +32,5 @@ function App() {
       </header>
     </div>
   );
-}
-
+  **/
 export default App;
