@@ -5,46 +5,24 @@ import ResetPassword from "./Pages/resetPassword/resetPassword";
 import Profile from "./Pages/profile/profile"
 import ForgotPassword from "./Pages/ForgotPassword/forgotPassword";
 import "./style.scss";
-import { createBrowserRouter, RouterProvider} from 'react-router-dom';
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import PageNotFound from "./Pages/pageNotFound/pageNotFound";
-
-
-const router=createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/resetPassword",
-    element: <ResetPassword />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-  },
-  {
-    path: "/forgotPassword",
-    element: <ForgotPassword />,
-  },
-  {
-    path: "*",
-    element: <PageNotFound />
-  }
-])
 
 
 function App() {
   return (
     <div>
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/resetPassword" element={<ResetPassword/>}/>
+          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/forgotPassword" element={<ForgotPassword/>}/>
+          <Route path="*" element={<PageNotFound/>}/>
+        </Routes>
+      </BrowserRouter>
     </div>
     
   );
