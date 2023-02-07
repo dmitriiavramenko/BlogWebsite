@@ -1,37 +1,56 @@
-import React from "react";
-import './App.css';
-import { Route, Routes} from "react-router-dom"
+import Home from "./Pages/Home/home";
+import Login from "./Pages/Login/login";
+import Register from "./Pages/Register/register";
+import ResetPassword from "./Pages/resetPassword/resetPassword";
+import Profile from "./Pages/profile/profile"
+import ForgotPassword from "./Pages/ForgotPassword/forgotPassword";
+import "./style.scss";
+import { createBrowserRouter, RouterProvider} from 'react-router-dom';
+import PageNotFound from "./Pages/pageNotFound/pageNotFound";
+
+
+const router=createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/resetPassword",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
+  {
+    path: "/forgotPassword",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "*",
+    element: <PageNotFound />
+  }
+])
+
 
 function App() {
-  const [data, setData] = React.useState(null);
-
-  React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
-
   return (
-  <Routes>
-    <Route path="/" element={<h1>Home</h1>}/>
-    <Route path="/login" element={<h1>Login</h1>}/>
-    <Route path="/about" element={<h1>About us</h1>}/>
-  </Routes>
-  )
+    <div>
+      <RouterProvider router={router} />
+    </div>
+    
+  );
 }
 
-
-/** 
-  (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {!data ? "Loading..." : data}
-        </p>
-        
-      </header>
-    </div>
-  );
-  **/
 export default App;
+
+
+
