@@ -5,14 +5,14 @@ import ResetPassword from "./Pages/resetPassword/resetPassword";
 import Profile from "./Pages/profile/profile"
 import ForgotPassword from "./Pages/ForgotPassword/forgotPassword";
 import "./style.scss";
-import { BrowserRouter, Route, Routes} from 'react-router-dom';
+import { HashRouter, Route, Routes} from 'react-router-dom';
 import PageNotFound from "./Pages/pageNotFound/pageNotFound";
 
 
 function App() {
   return (
     <div>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
@@ -22,7 +22,7 @@ function App() {
           <Route path="/forgotPassword" element={<ForgotPassword/>}/>
           <Route path="*" element={<PageNotFound/>}/>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
     
   );
