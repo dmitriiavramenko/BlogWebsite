@@ -1,0 +1,96 @@
+@import "../../style.scss";
+
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 60px;
+    border-bottom: 1px solid lightgray;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 999;
+
+
+    .left{
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        span{
+            font-weight: bold;
+            font-size: 46px;
+            color:rebeccapurple;
+        }
+        .search{
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            padding:5px;
+
+            input{
+                border:none;
+                width:500px;
+                height: 20px;
+                background-color: transparent;
+                color:#555;
+
+                @include mobile{
+                    display: none;
+                }
+
+                @include tablet{
+                    width: 200px;
+                }
+
+                
+            }
+        }
+    }
+
+    .right{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        @include mobile{
+            display: none;
+        }
+
+        .user{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+
+            @include tablet{
+                display: none;
+            }
+
+           img{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+           }
+
+           span{
+            font-weight: bold;
+           }
+        }
+    }
+}
+
+// @media only screen and (max-width: 1367px){
+//     .navBar{
+//         display: none;
+
+//         .right{
+//             display: none;
+//         }
+
+//     }
+// }

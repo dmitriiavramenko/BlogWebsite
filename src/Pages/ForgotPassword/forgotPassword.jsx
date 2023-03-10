@@ -33,7 +33,7 @@ const ForgotPassword = () => {
         });
         const data = await response.json();
 
-        if (data != "Password updated successfully") {
+        if (data != "Email sent successfully!") {
           setError(data);
         } else {
           console.log("Password reset successful!");
@@ -54,8 +54,8 @@ const ForgotPassword = () => {
               alias totam numquam ipsa exercitationem dignissimos, error nam,
               consequatur.
             </p>
-            <span>Don't you have an account?</span>
-              <Link to="/register"><button>Register</button></Link>
+            <span>Do you have an account?</span>
+              <Link to="/login"><button>Login</button></Link>
           </div>
           <div className="right">
             <h1>Password Reset</h1>

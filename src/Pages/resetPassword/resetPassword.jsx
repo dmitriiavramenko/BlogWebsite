@@ -15,7 +15,7 @@ const ResetPassword = () => {
       navigate('/login');
     }
     else {
-      setEmail(localStorage.getItem("user"));
+      setEmail(localStorage.getItem("email"));
     }
   }, [navigate]);
 
@@ -75,6 +75,8 @@ const ResetPassword = () => {
               alias totam numquam ipsa exercitationem dignissimos, error nam,
               consequatur.
             </p>
+            <span>Go back to your profile?</span>
+            <Link to={'/profile'}><button>Go To Profile</button></Link>
           </div>
           <div className="right">
             <h1>Change Password</h1>
@@ -85,7 +87,7 @@ const ResetPassword = () => {
               <input type="password" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required/>
               <input type="password" placeholder="Confirm New Password" value={confirmPassword}  onChange={(e) => setConfirmPassword(e.target.value)}  required/>
               <button type="submit">Change Password</button>
-              <Link to={'/profile'}><button>Back</button></Link>
+              
             </form>
           </div>
         </div>

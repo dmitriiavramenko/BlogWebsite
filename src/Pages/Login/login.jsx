@@ -10,9 +10,9 @@ const Login = () => {
 
   useEffect(() => {
     if (localStorage.getItem('user')) {
-      navigate('/profile');
+      navigate('/profile/' + localStorage.getItem('user'));   // this was profile
     }
-  }, [navigate]);
+  }, []);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -40,8 +40,10 @@ const Login = () => {
       if (data !== "Account found!") {
         setError(data);
       } else {
-        localStorage.setItem('user', email);
-        navigate("/profile");
+        localStorage.setItem('email', email);
+        var user = email.split('@')[0];
+        localStorage.setItem('user', user);
+        navigate(`/profile/${user}`);
         console.log("Login successful!");
         console.log(localStorage.getItem('user'));
         
@@ -53,7 +55,7 @@ const Login = () => {
   };
 
   return (  
-      <div className="login">
+  <div className="login">
     <div className="card">
       <div className="left">
         <h1>Hey There...</h1>

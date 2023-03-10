@@ -1,0 +1,23 @@
+@import "../../style.scss";
+
+
+.home{
+    padding: 20px 70px;
+    background-color:ghostwhite;
+
+    @include mobile{
+        padding: 10px;
+    }
+
+    @include tablet{
+        padding: 20px;
+    }
+}
+
+
+// @media only screen and (max-width: 1367px){
+//     .home{
+//         padding: 10px;
+//     }
+// }
+
