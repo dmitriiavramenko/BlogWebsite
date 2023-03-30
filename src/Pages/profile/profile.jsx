@@ -9,9 +9,19 @@ import LanguageIcon from "@mui/icons-material/Language";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Posts from "../../components/posts/posts";
+import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 
 const Profile = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem('user')) {
+      navigate('/login');  
+    }
+  }, []);
+
+
   return (
     <div className="profile">
       <div className="images">
@@ -56,7 +66,6 @@ const Profile = () => {
             <MoreVertIcon />
           </div>
         </div>
-      <Posts />
       </div>
     </div>
   );

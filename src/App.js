@@ -9,12 +9,10 @@ import Profile from "./Pages/profile/profile";
 import ForgotPassword from "./Pages/ForgotPassword/forgotPassword";
 import Posts from "./components/posts/posts";
 import "./style.scss";
-import { HashRouter, Route, Routes, createBrowserRouter, createHashRouter, RouterProvider, Outlet, Navigate} from 'react-router-dom';
+import { createHashRouter, RouterProvider, Outlet, Route, Navigate} from 'react-router-dom';
 import PageNotFound from "./Pages/pageNotFound/pageNotFound";
 
-
 function App() {
-  const currentUser = localStorage.getItem('user');
 
   const Layout = ()=>{
     return(
@@ -31,63 +29,57 @@ function App() {
     );
   };
 
-  const ProtectedRoute = ({children}) => {
-    if(!currentUser){
-      return <Navigate to="/login"/>
-    }
-    return children
-  }
-  const router = createHashRouter([
-    {
-      path: "/",
-      element: (
-      <ProtectedRoute>
-        <Layout />
-      </ProtectedRoute>
-      ),
-      children:[
-        {
-          path: "/",
-          element: <Home />
-        },
-        {
-          path: "/profile/:id",
-          element: <Profile />
-        },
-      ],
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/register",
-      element: <Register />,
-    },
-    {
-      path: "/resetPassword",
-      element: <ResetPassword />,
-    },
-    {
-      path: "/forgotPassword",
-      element: <ForgotPassword />,
-    },
-    {
-      path: "*",
-      element: <PageNotFound />
-    },
-    {
-      path: "/posts",
-      element: <Posts />,
-    },
-  ]);  
-  
-    return (
-      <div>
-        <RouterProvider router={router} />
-      </div>
-    );
-    }
+
+
+const router = createHashRouter([
+  {
+    path: "/",
+    element: (
+      <Layout />
+    ),
+    children:[
+      {
+        path: "/",
+        element: <Home />
+      },
+      {
+        path: "/profile/:id",
+        element: <Profile />
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/resetPassword",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/forgotPassword",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "*",
+    element: <PageNotFound />
+  },
+  {
+    path: "/posts",
+    element: <Posts />,
+  },
+]);  
+
+  return (
+    <div>
+      <RouterProvider router={router} />
+    </div>
+  );
+}
 
 export default App;
 

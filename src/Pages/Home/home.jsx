@@ -4,8 +4,17 @@ import "./home.scss"
 import Stories from "../../components/stories/stories";
 import Posts from "../../components/posts/posts";
 import Share from "../../components/share/share";
+import { useNavigate } from "react-router";
 
 function Home() {
+    const navigate = useNavigate();
+    useEffect(() => {
+      if (!localStorage.getItem('user')) {
+        navigate('/login');  
+      }
+    }, []);
+
+
     const [posts, setPosts] = useState([]);
     useEffect(() => {
       fetch("https://shy-puce-armadillo-fez.cyclic.app/posts/").then(response => response.json())

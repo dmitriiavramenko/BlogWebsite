@@ -7,12 +7,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  
+ 
   useEffect(() => {
     if (localStorage.getItem('user')) {
-      navigate('/profile/' + localStorage.getItem('user'));   // this was profile
+      navigate('/profile/' + localStorage.getItem('user'));  
     }
   }, []);
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -43,9 +45,8 @@ const Login = () => {
         localStorage.setItem('email', email);
         var user = email.split('@')[0];
         localStorage.setItem('user', user);
-        navigate(`/profile/${user}`);
         console.log("Login successful!");
-        console.log(localStorage.getItem('user'));
+        navigate(`/`)
         
       }
     } catch (error) {

@@ -14,7 +14,7 @@ const Post = ({ post, onDeletePost, onUpdatePost}) => {
 
     const [commentOpen, setCommentOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-    // temporary
+  
     const liked = false;
     const currentUser = localStorage.getItem('user');
 
@@ -91,14 +91,14 @@ const Post = ({ post, onDeletePost, onUpdatePost}) => {
                     </div>
                     <div className="item" onClick={()=>setCommentOpen(!commentOpen)}>
                         <TextsmsOutlinedIcon />
-                        8 Comments
+                        {post.comments.length}
                     </div>
                     <div className="item">
                         <ShareOutlinedIcon />
                         Share
                     </div>
                 </div>
-                {commentOpen && <Comments />}
+                {commentOpen && <Comments post={post} onUpdatePost={onUpdatePost} key={post._id}/>}
             </div>
         </div>
     );
