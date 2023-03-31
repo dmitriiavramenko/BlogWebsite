@@ -2,6 +2,7 @@ import "./comments.scss";
 import User from "../../assets/user.jpeg";
 import { useState } from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Link } from "react-router-dom";
 
 const Comments = ({post, onUpdatePost}) => {
     const [text, setText] = useState("");
@@ -68,7 +69,15 @@ const Comments = ({post, onUpdatePost}) => {
                 <div key={comment.id} className="comment">
                     <img src={comment.profilePicture} alt="" />
                     <div className="info">
-                        <span>{comment.username}</span>
+                        {localStorage.getItem('user') === comment.username ? (
+                            <Link to={`/profile/${comment.username}`} style={{textDecoration:"none", color: "inherit"}}>
+                                <span className="name">{comment.username}</span>
+                            </Link>
+                        ) : (
+                            <Link to={`/friendProfile/${comment.username}`} style={{textDecoration:"none", color: "inherit"}}>
+                                <span className="name">{comment.username}</span>
+                            </Link>
+                        )}
                         {editingCommentId === comment.id ? (
                         <div>
                             <input type="text" value={editedCommentText} onChange={(e) => setEditedCommentText(e.target.value)} />
