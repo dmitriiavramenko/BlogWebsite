@@ -48,7 +48,7 @@ const FriendProfile = () => {
   }, []);
 
 const handleAddFollow = async () => {
-    const response = await fetch("http://localhost:8080/users/addFriend", {
+    const response = await fetch("https://shy-puce-armadillo-fez.cyclic.app/users/addFriend", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +62,7 @@ const handleAddFollow = async () => {
 
 
 const handleDeleteFollow = async () => {
-    const response = await fetch("http://localhost:8080/users/removeFriend", {
+    const response = await fetch("https://shy-puce-armadillo-fez.cyclic.app/users/removeFriend", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
