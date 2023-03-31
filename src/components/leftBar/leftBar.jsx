@@ -13,18 +13,20 @@ import Messages from "../../assets/messages.png";
 import Fund from "../../assets/fund.png";
 import Tutorials from "../../assets/tutorials.png";
 import Courses from "../../assets/courses.png";
-
+import { Link } from "react-router-dom";
 
 const LeftBar = () => {
     return (
         <div className="leftBar">
             <div className="container">
                 <div className="menu">
-                    <div className="user">
-                        <img 
-                          src={User} alt="" />
-                        <span>Sophia Bush</span>
-                    </div>
+                    <Link to={`/profile/${localStorage.getItem('user')}`} style={{textDecoration:"none", color: "inherit"}}>          
+                        <div className="user">
+                            <img 
+                            src={User} alt="" />
+                            <span>{localStorage.getItem('user')}</span>
+                        </div>
+                    </Link>
                     <div className="item">
                         <img src={Friends} alt="" />
                         <span>Friends</span>

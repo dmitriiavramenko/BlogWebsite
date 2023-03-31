@@ -78,12 +78,12 @@ const Comments = ({post, onUpdatePost}) => {
                       <p>{comment.text}</p>
                     )}
                     </div>
-                    {post.username === currentUser && currentUser === comment.username && (
+                    { currentUser === comment.username && (
                     <MoreHorizIcon onClick={() => {setMenuOpen(!menuOpen); setMenuCommentId(comment.id)}} />)}
-                    {menuOpen && post.username === currentUser  && comment.id === menuCommentId && (
+                    {menuOpen && comment.username === currentUser  && comment.id === menuCommentId && (
                         <button onClick={handleDeleteClick}>Delete</button>
                     )}
-                    {menuOpen && post.username === currentUser && comment.id === menuCommentId && (
+                    {menuOpen && comment.username === currentUser && comment.id === menuCommentId && (
                         <button onClick={() => handleEdit(comment.id, comment.text)}>Edit</button>
                     )}
                     <span className="date">1 hour ago</span>

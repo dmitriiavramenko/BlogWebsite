@@ -6,6 +6,7 @@ import Login from "./Pages/Login/login";
 import Register from "./Pages/Register/register";
 import ResetPassword from "./Pages/resetPassword/resetPassword";
 import Profile from "./Pages/profile/profile";
+import FriendProfile from "./Pages/friendProfile/friendProfile";
 import ForgotPassword from "./Pages/ForgotPassword/forgotPassword";
 import Posts from "./components/posts/posts";
 import "./style.scss";
@@ -30,7 +31,6 @@ function App() {
   };
 
 
-
 const router = createHashRouter([
   {
     path: "/",
@@ -45,6 +45,10 @@ const router = createHashRouter([
       {
         path: "/profile/:id",
         element: <Profile />
+      },
+      {
+        path: "/friendProfile/:id",
+        element: <FriendProfile />
       },
     ],
   },

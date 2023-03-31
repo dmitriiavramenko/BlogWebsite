@@ -11,9 +11,10 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Posts from "../../components/posts/posts";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
-
+import { useParams } from "react-router";
 
 const Profile = () => {
+  const {id} = useParams();
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem('user')) {
@@ -48,7 +49,7 @@ const Profile = () => {
             </a>
           </div>
           <div className="center">
-            <span>Sophia Bush</span>
+            <span>{id}</span>
             <div className="info">
               <div className="item">
                 <PlaceIcon />

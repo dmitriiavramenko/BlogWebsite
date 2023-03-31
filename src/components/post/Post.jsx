@@ -56,10 +56,15 @@ const Post = ({ post, onDeletePost, onUpdatePost}) => {
                 <div className="userInfo">
                     <img src={post.profilePic} alt="" />
                     <div className="details">
-                        <Link 
-                        to={`/profile/${post.userId}`} style={{textDecoration:"none", color: "inherit"}}>
-                        <span className="name">{post.username}</span>
-                        </Link>
+                        {localStorage.getItem('user') === post.username ? (
+                            <Link to={`/profile/${post.username}`} style={{textDecoration:"none", color: "inherit"}}>
+                                <span className="name">{post.username}</span>
+                            </Link>
+                        ) : (
+                            <Link to={`/friendProfile/${post.username}`} style={{textDecoration:"none", color: "inherit"}}>
+                                <span className="name">{post.username}</span>
+                            </Link>
+                        )}
                         <span className="date">1 min ago</span>
                     </div>
                 </div>
