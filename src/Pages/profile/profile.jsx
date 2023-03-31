@@ -28,6 +28,9 @@ const Profile = () => {
     if (!localStorage.getItem('user')) {
       navigate('/login');  
     }
+    else if (id != localStorage.getItem('user')) {
+      navigate('/');
+    }
   }, []);
 
   

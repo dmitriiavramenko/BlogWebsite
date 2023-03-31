@@ -31,6 +31,8 @@ const FriendProfile = () => {
   useEffect(() => {
     if (!localStorage.getItem('user')) {
       navigate('/login');  
+    } else if (id === localStorage.getItem('user')) {
+      navigate('/');
     } else {
       const checkFriendship = async () => {
         const response = await fetch("https://shy-puce-armadillo-fez.cyclic.app/users/getFriends", {

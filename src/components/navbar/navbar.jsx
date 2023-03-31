@@ -78,10 +78,12 @@ const Navbar = () => {
                 <PersonOutlinedIcon />
                 <EmailOutlinedIcon />
                 <NotificationsOutlinedIcon />
+                <Link to={`/profile/${localStorage.getItem('user')}`} style={{textDecoration:"none", color: "inherit"}}>
                 <div className="user">
                     <img src={User} alt="" />
                     <span>{localStorage.getItem('user')}</span>
                 </div>
+                </Link>
             </div>
         </div>
     );
