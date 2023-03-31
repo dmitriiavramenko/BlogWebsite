@@ -16,13 +16,21 @@ import { useParams } from "react-router";
 const Profile = () => {
   const {id} = useParams();
   const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('email');
+    navigate('/login')
+  };
+  
+
   useEffect(() => {
     if (!localStorage.getItem('user')) {
       navigate('/login');  
     }
   }, []);
 
-
+  
   return (
     <div className="profile">
       <div className="images">
@@ -49,6 +57,8 @@ const Profile = () => {
             </a>
           </div>
           <div className="center">
+            <br></br>
+            <br></br>
             <span>{id}</span>
             <div className="info">
               <div className="item">
@@ -61,6 +71,7 @@ const Profile = () => {
               </div>
             </div>
               <button>Update Profile</button>
+              <button onClick={handleLogOut}>Loggout</button>
           </div>
           <div className="right">
             <EmailOutlinedIcon />
