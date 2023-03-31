@@ -34,6 +34,7 @@ const Register = () => {
     useEffect(()=> {
       console.log(formErrors);
       if (Object.keys(formErrors).length === 0 && isSubmit) {
+        formValues.username = formValues.email.split('@')[0];
         fetch('https://shy-puce-armadillo-fez.cyclic.app/users/add', {
           method: 'POST',
           body: JSON.stringify(formValues),
@@ -44,15 +45,13 @@ const Register = () => {
           setBackendValidated(true);
         })
       }
-
+      console.log(formValues);
     },[formErrors])
 
     const validate = (values) => {
       const errors = {};
       const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-      if (!values.username) {
-        errors.username = "Username is required!";
-      }
+     
       if (!values.email) {
         errors.email = "Email is required!";
       } else if (!regex.test(values.email)) {
@@ -87,8 +86,6 @@ const Register = () => {
             <form onSubmit={handleSubmit} className="registerForm">
               {isSubmit && backendValidated ? (<div>Succesfully Signed Up!</div>) : (<div></div>)}
               {isSubmit && !backendValidated ? (<div>Account can't be created!</div>) : (<div></div>)}
-              <input className="registerInput" onChange={handleChange} value={formValues.username} name="username" type="text" placeholder="Username" />
-              <p>{formErrors.username}</p>
               <input className="registerInput" onChange={handleChange} value={formValues.email} name="email" type="text" placeholder="Email" />
               <p>{formErrors.email}</p>
               <input className="registerInput" onChange={handleChange} value={formValues.password} name="password" type="password" placeholder="Password" />

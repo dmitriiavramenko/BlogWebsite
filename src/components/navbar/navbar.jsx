@@ -27,11 +27,11 @@ const Navbar = () => {
                 },
                 body: JSON.stringify({ "email" : localStorage.getItem('email')}),
               });
-            console.log(localStorage.getItem('email'))
             const data = await response.json();
+            console.log(data)
             setSearchResults(
-              data.filter((result) =>
-                result.username.toLowerCase().includes(searchTerm.toLowerCase())
+              data.filter((result) => 
+                result.friendUsername.toLowerCase().includes(searchTerm.toLowerCase())
               ).slice(0, 2)
             );
           } catch (error) {
@@ -68,7 +68,7 @@ const Navbar = () => {
                     {searchResults.length > 0 && searchTerm.length >= 2 && (
                         <div className="search-results">
                         {searchResults.map((result) => (
-                            <div key={result.id}>{result.username}</div>
+                            <div key={result._id}><Link  to={`/friendProfile/${result.friendUsername}`} style={{textDecoration:"none"}} >{result.friendUsername}</Link></div>
                         ))}
                         </div>
                     )}

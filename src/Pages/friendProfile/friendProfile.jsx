@@ -16,8 +16,17 @@ import { useParams } from "react-router";
 const FriendProfile = () => {
   const {id} = useParams();
   const navigate = useNavigate();
-  const [isFriend, setIsFriend] = useState(false);
+  const [isFriend, setIsFriend] = useState(null);
   const email = localStorage.getItem('email');
+
+  function isIdInData(id, data) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].friendUsername === id) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   useEffect(() => {
     if (!localStorage.getItem('user')) {
@@ -32,7 +41,7 @@ const FriendProfile = () => {
                   body: JSON.stringify({ "email" : localStorage.getItem('email')}),
                 });
         const data = await response.json();
-        setIsFriend(data.includes(id));
+        setIsFriend(isIdInData(id, data));
       };
       checkFriendship();
     }
@@ -47,9 +56,7 @@ const handleAddFollow = async () => {
       body: JSON.stringify({ "username" : localStorage.getItem('user'), "friendUsername" : id}),
     });
   const data = await response.json();
-  if (data.success) {
-    setIsFriend(true);
-  }
+  setIsFriend(true);
   console.log(data, id)
 }
 
@@ -63,9 +70,7 @@ const handleDeleteFollow = async () => {
         body: JSON.stringify({ "username" : localStorage.getItem('user'), "friendUsername" : id}),
       });
     const data = await response.json();
-    if (data.success) {
-      setIsFriend(false);
-    }
+    setIsFriend(false);
 };
 
   return (
@@ -105,10 +110,12 @@ const handleDeleteFollow = async () => {
                 <span>Seneca Connect</span>
               </div>
             </div>
-                {/* when user clicks follow, it will change to unfollow */}
-                <button onClick={isFriend ? handleDeleteFollow : handleAddFollow}>
-                  {isFriend ? "Unfollow" : "Follow"}
-                </button>
+                {isFriend && (
+                  <button onClick={handleDeleteFollow}>Unfollow</button>
+                )}
+                {!isFriend && (
+                  <button onClick={handleAddFollow}>Follow</button>
+                )}
           </div>
           <div className="right">
             <EmailOutlinedIcon />
