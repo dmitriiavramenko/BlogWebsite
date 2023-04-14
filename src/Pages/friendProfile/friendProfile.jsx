@@ -22,16 +22,7 @@ const FriendProfile = () => {
 
 
   const [posts, setPosts] = useState([]);
-    useEffect(() => {
-      fetch("https://shy-puce-armadillo-fez.cyclic.app/posts/byUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ "username":id }),
-      }).then(response => response.json())
-      .then(data => setPosts(data.reverse()));
-    }, []);
+  const [users, setUsers] = useState([]);
 
 
     const handleDelete = (id) => {
@@ -80,29 +71,39 @@ const FriendProfile = () => {
     } else if (id === localStorage.getItem('user')) {
       navigate('/');
     } else {
-      const checkFriendship = async () => {
-        const response = await fetch("https://shy-puce-armadillo-fez.cyclic.app/users/getFriends", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ "email" : localStorage.getItem('email')}),
-                });
-        const data = await response.json();
-        setIsFriend(isIdInData(id, data));
-      };
-      checkFriendship();
-
-      fetch("https://shy-puce-armadillo-fez.cyclic.app/users/").then(response => response.json())
-      .then(data => { 
-          for (let i = 0; i < data.length; i++) {
-            if (data[i].username === id) {
-              setData(data[i]);
+      Promise.all([
+        fetch("https://shy-puce-armadillo-fez.cyclic.app/users/getFriends", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "email": localStorage.getItem('email') }),
+        }).then(response => response.json()),
+        fetch("https://shy-puce-armadillo-fez.cyclic.app/users/").then(response => response.json()),
+        fetch("https://shy-puce-armadillo-fez.cyclic.app/posts/byUser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "username": id }),
+        }).then(response => response.json())
+    ]).then(data => {
+        const friendsData = data[0];
+        const usersData = data[1];
+        const postsData = data[2];
+    
+        setIsFriend(isIdInData(id, friendsData));
+        setUsers(usersData);
+        for (let i = 0; i < usersData.length; i++) {
+            if (usersData[i].username === id) {
+                setData(usersData[i]);
             }
-          }
-      });
+        }
+        setPosts(postsData.reverse());
+    });
+    
     }
-  }, []);
+  }, [id]);
 
 const handleAddFollow = async () => {
     const response = await fetch("https://shy-puce-armadillo-fez.cyclic.app/users/addFriend", {
@@ -179,7 +180,7 @@ const handleDeleteFollow = async () => {
             <MoreVertIcon />
           </div>
         </div>
-        <Posts postings={posts} handleUpdate={handleUpdate} handleDelete={handleDelete}/>
+        <Posts postings={posts} handleUpdate={handleUpdate} handleDelete={handleDelete} users={users}/>
       </div>
     </div>
   );

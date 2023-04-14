@@ -10,15 +10,18 @@ import FriendProfile from "./Pages/friendProfile/friendProfile";
 import ForgotPassword from "./Pages/ForgotPassword/forgotPassword";
 import Posts from "./components/posts/posts";
 import "./style.scss";
-import { createBrowserRouter, RouterProvider, Outlet, Route, Navigate} from 'react-router-dom';
+import { createHashRouter, RouterProvider, Outlet, Route, Navigate} from 'react-router-dom';
 import PageNotFound from "./Pages/pageNotFound/pageNotFound";
+import { useEffect, useState } from "react";
 
 function App() {
+
+  
 
   const Layout = ()=>{
     return(
       <div>
-        <Navbar />
+        <Navbar  />
         <div style={{display: "flex"}}>
           <LeftBar />
           <div style={{flex: 6}}>
@@ -31,7 +34,7 @@ function App() {
   };
 
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: (

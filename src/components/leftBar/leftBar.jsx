@@ -14,8 +14,22 @@ import Fund from "../../assets/fund.png";
 import Tutorials from "../../assets/tutorials.png";
 import Courses from "../../assets/courses.png";
 import { Link } from "react-router-dom";
+import { useState, useEffect} from "react";
 
 const LeftBar = () => {
+    const [user, setUser] = useState("");
+
+    useEffect(() => {
+        fetch("https://shy-puce-armadillo-fez.cyclic.app/users/getUserById", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "username":localStorage.getItem('user') }),
+        }).then(response => response.json())
+        .then(data => setUser(data))
+    }, [])
+
     return (
         <div className="leftBar">
             <div className="container">
@@ -23,7 +37,7 @@ const LeftBar = () => {
                     <Link to={`/profile/${localStorage.getItem('user')}`} style={{textDecoration:"none", color: "inherit"}}>          
                         <div className="user">
                             <img 
-                            src={User} alt="" />
+                            src={user.img} alt="" />
                             <span>{localStorage.getItem('user')}</span>
                         </div>
                     </Link>

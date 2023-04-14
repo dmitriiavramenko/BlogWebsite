@@ -6,7 +6,7 @@ import Friend from "../../assets/friends.png";
 import { useState } from "react";
 
 
-const Share = ({onAddPost}) => {
+const Share = ({onAddPost, user}) => {
     const [data, setData] = useState("");
 
     const handleSubmit = (event) => {
@@ -24,7 +24,6 @@ const Share = ({onAddPost}) => {
           if (response.ok) {
             onAddPost(body);
             setData("");
-            console.log(response);
           } else {
             throw new Error('Error creating post');
           }
@@ -36,7 +35,7 @@ const Share = ({onAddPost}) => {
       <div className="container">
         <div className="top">
           <div className="left">
-            <img src={User} alt="" />
+            <img src={user.img} alt="" />
             <input
               type="text"
               placeholder="What is on your mind?"

@@ -8,7 +8,7 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState, useEffect } from "react";
 
-const Post = ({ post, onDeletePost, onUpdatePost}) => {
+const Post = ({ post, onDeletePost, onUpdatePost, users}) => {
     const [editingPostId, setEditingPostId] = useState(null);
     const [editedPostText, setEditedPostText] = useState('');
 
@@ -19,14 +19,12 @@ const Post = ({ post, onDeletePost, onUpdatePost}) => {
     const currentUser = localStorage.getItem('user');
 
     useEffect(() => {
-     fetch("https://shy-puce-armadillo-fez.cyclic.app/users/").then(response => response.json())
-     .then(data => { 
-         for (let i = 0; i < data.length; i++) {
-           if (data[i].username === post.username) {
-             setData(data[i]);
+         for (let i = 0; i < users.length; i++) {
+           if (users[i].username === post.username) {
+             setData(users[i]);
            }
          }
-     });
+         
     }, []);
 
     const updatePost = (postId, newText) => {
@@ -114,7 +112,7 @@ const Post = ({ post, onDeletePost, onUpdatePost}) => {
                         Share
                     </div>
                 </div>
-                {commentOpen && <Comments post={post} onUpdatePost={onUpdatePost} key={post._id}/>}
+                {commentOpen && <Comments post={post} onUpdatePost={onUpdatePost} users={users} key={post._id}/>}
             </div>
         </div>
     );

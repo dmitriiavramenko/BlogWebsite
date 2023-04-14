@@ -8,19 +8,31 @@ import { useNavigate } from "react-router";
 
 function Home() {
     const navigate = useNavigate();
+
+    const [user, setUser] = useState("");
+    const [posts, setPosts] = useState([]);
+    const [users, setUsers] = useState([]);
+
     useEffect(() => {
       if (!localStorage.getItem('user')) {
         navigate('/login');  
       }
+      else {
+        Promise.all([
+          fetch("https://shy-puce-armadillo-fez.cyclic.app/posts/").then(response => response.json()),
+          fetch("https://shy-puce-armadillo-fez.cyclic.app/users/").then(response => response.json()),
+        ])
+        .then(([postsData, usersData]) => {
+          setPosts(postsData.reverse());
+          setUsers(usersData);
+          for (let i = 0; i < usersData.length; i++) {
+            if (usersData[i].username === localStorage.getItem('user')) {
+                setUser(usersData[i]);
+            }
+        }
+        })
+      }
     }, []);
-
-
-    const [posts, setPosts] = useState([]);
-    useEffect(() => {
-      fetch("https://shy-puce-armadillo-fez.cyclic.app/posts/").then(response => response.json())
-      .then(data => setPosts(data.reverse()));
-    }, []);
-
 
 
     const handleAddPost = (newPost) => {
@@ -53,8 +65,8 @@ function Home() {
 
     return (
         <div className="home">
-            <Share onAddPost={handleAddPost}/>
-            <Posts postings={posts} handleUpdate={handleUpdate} handleDelete={handleDelete}/>
+            <Share onAddPost={handleAddPost} user={user}/>
+            <Posts postings={posts} handleUpdate={handleUpdate} handleDelete={handleDelete} users={users}/>
         </div>
     );
 }

@@ -16,7 +16,18 @@ const Navbar = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [user, setUser] = useState("");
 
+    useEffect(() => {
+      fetch("https://shy-puce-armadillo-fez.cyclic.app/users/getUserById", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "username":localStorage.getItem('user') }),
+      }).then(response => response.json())
+      .then(data => setUser(data))
+    }, [])
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -28,7 +39,6 @@ const Navbar = () => {
                 body: JSON.stringify({ "email" : localStorage.getItem('email')}),
               });
             const data = await response.json();
-            console.log(data)
             setSearchResults(
               data.filter((result) => 
                 result.friendUsername.toLowerCase().includes(searchTerm.toLowerCase())
@@ -80,7 +90,7 @@ const Navbar = () => {
                 <NotificationsOutlinedIcon />
                 <Link to={`/profile/${localStorage.getItem('user')}`} style={{textDecoration:"none", color: "inherit"}}>
                 <div className="user">
-                    <img src={User} alt="" />
+                    <img src={user.img} alt="" />
                     <span>{localStorage.getItem('user')}</span>
                 </div>
                 </Link>

@@ -1,20 +1,41 @@
 import "./comments.scss";
 import User from "../../assets/user.jpeg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Link } from "react-router-dom";
 
-const Comments = ({post, onUpdatePost}) => {
+const Comments = ({post, onUpdatePost, users}) => {
     const [text, setText] = useState("");
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editedCommentText, setEditedCommentText] = useState('');
 
     const [menuOpen, setMenuOpen] = useState(false);
     const [menuCommentId, setMenuCommentId] = useState(null);
-
+    const [user, setUser] = useState("");
     const currentUser = localStorage.getItem('user');
+    
+    const handleAddComment = () => {
+        const maxId = post.comments.reduce((max, comment) => Math.max(max, comment.id), 0);
+        const newComment = { id: maxId + 1, username: localStorage.getItem('user'), "text" : text, date: new Date()};
+        const updatedComments = [...post.comments, newComment];
+        updatePost(post._id, updatedComments);
+    }
 
+    useEffect(() => {
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].username === currentUser) {
+                setUser(users[i]);
+            }
+        }
+        for (let i = 0; i < post.comments.length; i++) {
+            for (let j = 0; j < users.length; j++) {
+                if (post.comments[i].username === users[j].username) {
+                    post.comments[i].profilePicture = users[j].img;
+                }
 
+            }
+        }
+    }, [post.comments])
     const updatePost = (postId, comments) => {
       fetch(`https://shy-puce-armadillo-fez.cyclic.app/posts/update/${postId}`, {
         method: 'POST',
@@ -29,12 +50,7 @@ const Comments = ({post, onUpdatePost}) => {
         });
     };
 
-    const handleAddComment = () => {
-        const maxId = post.comments.reduce((max, comment) => Math.max(max, comment.id), 0);
-        const newComment = { id: maxId + 1, username: localStorage.getItem('user'), text, date: new Date() };
-        const updatedComments = [...post.comments, newComment];
-        updatePost(post._id, updatedComments);
-    }
+    
 
 
     const handleEdit = (commentId, commentText) => {
@@ -60,7 +76,7 @@ const Comments = ({post, onUpdatePost}) => {
     return (
         <div className="comments">
             <div className="write">
-            <img src={User} alt="" />
+            <img src={user.img} alt="" />
             <input type="text" placeholder="write a comment..." value={text}  onChange={(e) => setText(e.target.value)}/>
             <button onClick={handleAddComment}>Send</button>
             </div>

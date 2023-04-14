@@ -13,7 +13,7 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-
+import axios from 'axios';
 
 const Profile = () => {
   const {id} = useParams();
@@ -22,19 +22,9 @@ const Profile = () => {
   const [data, setData] = useState("");
   const [edit, setEdit] = useState(null);
   const [newImage, setNewImage] = useState("");
-
+  const [users, setUsers] = useState("");
   const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    fetch("https://shy-puce-armadillo-fez.cyclic.app/posts/byUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ "username":id }),
-      }).then(response => response.json())
-      .then(data => setPosts(data.reverse()));
-  }, []);
-
+ 
 
   const handleDelete = (id) => {
   fetch(`https://shy-puce-armadillo-fez.cyclic.app/posts/${id}`, {
@@ -92,13 +82,20 @@ const Profile = () => {
       navigate('/');
     }
     else {
-      fetch("https://shy-puce-armadillo-fez.cyclic.app/users/").then(response => response.json())
-      .then(data => { 
-          for (let i = 0; i < data.length; i++) {
-            if (data[i].username === id) {
-              setData(data[i]);
-            }
-          }
+      Promise.all([
+        fetch("https://shy-puce-armadillo-fez.cyclic.app/users/").then(response => response.json()),
+        fetch("https://shy-puce-armadillo-fez.cyclic.app/posts/byUser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ "username":id }),
+        }).then(response => response.json())
+      ]).then(([users, posts]) => {
+        const userData = users.find(user => user.username === id);
+        setData(userData);
+        setPosts(posts.reverse());
+        setUsers(users);
       });
     }
   }, []);
@@ -168,7 +165,7 @@ const Profile = () => {
             <button onClick={handleLogOut}>Loggout</button>
           </div>
         </div>
-        <Posts postings={posts} handleUpdate={handlePostsUpdate} handleDelete={handleDelete}/>
+        <Posts postings={posts} handleUpdate={handlePostsUpdate} handleDelete={handleDelete} users={users}/>
       </div>
     </div>
   );
