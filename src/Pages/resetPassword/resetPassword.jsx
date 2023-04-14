@@ -76,7 +76,7 @@ const ResetPassword = () => {
               consequatur.
             </p>
             <span>Go back to your profile?</span>
-            <Link to={'/profile'}><button>Go To Profile</button></Link>
+            <Link to={`/profile/${localStorage.getItem('user')}`}><button>Go To Profile</button></Link>
           </div>
           <div className="right">
             <h1>Change Password</h1>

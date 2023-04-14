@@ -10,7 +10,7 @@ import FriendProfile from "./Pages/friendProfile/friendProfile";
 import ForgotPassword from "./Pages/ForgotPassword/forgotPassword";
 import Posts from "./components/posts/posts";
 import "./style.scss";
-import { createHashRouter, RouterProvider, Outlet, Route, Navigate} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet, Route, Navigate} from 'react-router-dom';
 import PageNotFound from "./Pages/pageNotFound/pageNotFound";
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
   };
 
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: (

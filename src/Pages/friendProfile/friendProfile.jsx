@@ -17,7 +17,53 @@ const FriendProfile = () => {
   const {id} = useParams();
   const navigate = useNavigate();
   const [isFriend, setIsFriend] = useState(null);
+  const [data, setData] = useState("");
   const email = localStorage.getItem('email');
+
+
+  const [posts, setPosts] = useState([]);
+    useEffect(() => {
+      fetch("https://shy-puce-armadillo-fez.cyclic.app/posts/byUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "username":id }),
+      }).then(response => response.json())
+      .then(data => setPosts(data.reverse()));
+    }, []);
+
+
+    const handleDelete = (id) => {
+    fetch(`https://shy-puce-armadillo-fez.cyclic.app/posts/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        setPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
+        return response.json();
+      })
+      .catch((error) => {
+        console.error("Error deleting post:", error);
+      });
+    };
+
+    const handleUpdate = () => {
+      fetch("https://shy-puce-armadillo-fez.cyclic.app/posts/byUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "username":id }),
+      }).then(response => response.json())
+      .then(data => setPosts(data.reverse()));
+    };
+
 
   function isIdInData(id, data) {
     for (let i = 0; i < data.length; i++) {
@@ -46,6 +92,15 @@ const FriendProfile = () => {
         setIsFriend(isIdInData(id, data));
       };
       checkFriendship();
+
+      fetch("https://shy-puce-armadillo-fez.cyclic.app/users/").then(response => response.json())
+      .then(data => { 
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].username === id) {
+              setData(data[i]);
+            }
+          }
+      });
     }
   }, []);
 
@@ -79,7 +134,7 @@ const handleDeleteFollow = async () => {
     <div className="profile">
       <div className="images">
         <img src="https://img.freepik.com/free-photo/black-concrete-textured-background_53876-63609.jpg" alt="" className="cover" />
-        <img src="https://i.pinimg.com/originals/5c/13/2d/5c132dfa587429da4608f665d1cb3384.jpg" alt="" className="profilePic" />
+        <img src={data.img} alt="" className="profilePic" />
       </div>
       <div className="profileContainer">
         <div className="uInfo">
@@ -124,9 +179,11 @@ const handleDeleteFollow = async () => {
             <MoreVertIcon />
           </div>
         </div>
+        <Posts postings={posts} handleUpdate={handleUpdate} handleDelete={handleDelete}/>
       </div>
     </div>
   );
 }
+
 
 export default FriendProfile;

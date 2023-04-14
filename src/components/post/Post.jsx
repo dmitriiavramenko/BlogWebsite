@@ -6,7 +6,7 @@ import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Post = ({ post, onDeletePost, onUpdatePost}) => {
     const [editingPostId, setEditingPostId] = useState(null);
@@ -14,9 +14,20 @@ const Post = ({ post, onDeletePost, onUpdatePost}) => {
 
     const [commentOpen, setCommentOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-  
+    const [data, setData] = useState("");
     const liked = false;
     const currentUser = localStorage.getItem('user');
+
+    useEffect(() => {
+     fetch("https://shy-puce-armadillo-fez.cyclic.app/users/").then(response => response.json())
+     .then(data => { 
+         for (let i = 0; i < data.length; i++) {
+           if (data[i].username === post.username) {
+             setData(data[i]);
+           }
+         }
+     });
+    }, []);
 
     const updatePost = (postId, newText) => {
         fetch(`https://shy-puce-armadillo-fez.cyclic.app/posts/update/${postId}`, {
@@ -54,7 +65,7 @@ const Post = ({ post, onDeletePost, onUpdatePost}) => {
             <div className="container">
                 <div className="user">
                 <div className="userInfo">
-                    <img src={post.profilePic} alt="" />
+                    <img src={data.img} alt="" />
                     <div className="details">
                         {localStorage.getItem('user') === post.username ? (
                             <Link to={`/profile/${post.username}`} style={{textDecoration:"none", color: "inherit"}}>

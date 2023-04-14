@@ -25,6 +25,7 @@ function Home() {
 
     const handleAddPost = (newPost) => {
         setPosts([newPost, ...posts]);
+        handleUpdate();
       };
     const handleDelete = (id) => {
     fetch(`https://shy-puce-armadillo-fez.cyclic.app/posts/${id}`, {
