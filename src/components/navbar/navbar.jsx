@@ -64,9 +64,7 @@ const Navbar = () => {
                 <Link to="/" style={{textDecoration:"none"}}>
                     <span>Seneca Connect</span>
                 </Link>
-                <HomeOutlinedIcon />
-                <DarkModeOutlinedIcon />
-                <GridViewOutlinedIcon />
+                <Link to="/" style={{textDecoration:"none"}}><HomeOutlinedIcon /></Link>
                 <div className="search">
                     <SearchOutlinedIcon />
                     <input
@@ -85,9 +83,6 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="right">
-                <PersonOutlinedIcon />
-                <EmailOutlinedIcon />
-                <NotificationsOutlinedIcon />
                 <Link to={`/profile/${localStorage.getItem('user')}`} style={{textDecoration:"none", color: "inherit"}}>
                 <div className="user">
                     <img src={user.img} alt="" />

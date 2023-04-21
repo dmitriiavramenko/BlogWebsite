@@ -12,7 +12,7 @@ import Posts from "./components/posts/posts";
 import "./style.scss";
 import { createHashRouter, RouterProvider, Outlet, Route, Navigate} from 'react-router-dom';
 import PageNotFound from "./Pages/pageNotFound/pageNotFound";
-import { useEffect, useState } from "react";
+import Message from "./Pages/message/message";
 
 function App() {
 
@@ -52,6 +52,10 @@ const router = createHashRouter([
       {
         path: "/friendProfile/:id",
         element: <FriendProfile />
+      },
+      {
+        path: "/message/:id",
+        element: <Message />
       },
     ],
   },

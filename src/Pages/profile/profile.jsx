@@ -115,35 +115,14 @@ const Profile = () => {
       <div className="profileContainer">
         <div className="uInfo">
           <div className="left">
-          <a href="http://facebook.com">
-              <FacebookTwoToneIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <InstagramIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <TwitterIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <LinkedInIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <PinterestIcon fontSize="large" />
-            </a>
+         
           </div>
           <div className="center">
             <br></br>
             <br></br>
             <span>{data.username}</span>
             <div className="info">
-              <div className="item">
-                <PlaceIcon />
-                <span>USA</span>
-              </div>
-              <div className="item">
-                <LanguageIcon />
-                <span>Seneca Connect</span>
-              </div>
+             
             </div>
             {/* This is where code should be */}  
               {edit ? (
@@ -160,8 +139,7 @@ const Profile = () => {
               </Link>
           </div>
           <div className="right">
-            <EmailOutlinedIcon />
-            <MoreVertIcon />
+            
             <button onClick={handleLogOut}>Loggout</button>
           </div>
         </div>

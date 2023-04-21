@@ -9,6 +9,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Posts from "../../components/posts/posts";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -140,33 +141,12 @@ const handleDeleteFollow = async () => {
       <div className="profileContainer">
         <div className="uInfo">
           <div className="left">
-          <a href="http://facebook.com">
-              <FacebookTwoToneIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <InstagramIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <TwitterIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <LinkedInIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <PinterestIcon fontSize="large" />
-            </a>
+         
           </div>
           <div className="center">
             <span>{id}</span>
             <div className="info">
-              <div className="item">
-                <PlaceIcon />
-                <span>USA</span>
-              </div>
-              <div className="item">
-                <LanguageIcon />
-                <span>Seneca Connect</span>
-              </div>
+              
             </div>
                 {isFriend && (
                   <button onClick={handleDeleteFollow}>Unfollow</button>
@@ -176,8 +156,7 @@ const handleDeleteFollow = async () => {
                 )}
           </div>
           <div className="right">
-            <EmailOutlinedIcon />
-            <MoreVertIcon />
+          {isFriend && <Link to={`/message/${id}`} style={{textDecoration:"none", color: "inherit"}}> <EmailOutlinedIcon /> </Link> }
           </div>
         </div>
         <Posts postings={posts} handleUpdate={handleUpdate} handleDelete={handleDelete} users={users}/>

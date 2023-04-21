@@ -74,17 +74,17 @@ const Post = ({ post, onDeletePost, onUpdatePost, users}) => {
                                 <span className="name">{post.username}</span>
                             </Link>
                         )}
-                        <span className="date">1 min ago</span>
+                        <span className="date">{}</span>
                     </div>
                 </div>
-                {post.username === currentUser && (
-                <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} />)}
                 {menuOpen && post.username === currentUser && (
                     <button onClick={handleDeleteClick}>Delete</button>
                 )}
                 {menuOpen && post.username === currentUser && (
                     <button onClick={() => handleEdit(post._id, post.data)}>Edit</button>
                 )}
+                {post.username === currentUser && (
+                <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} />)}
                 </div>
                 <div className="content">
                     {editingPostId === post._id ? (
@@ -99,17 +99,9 @@ const Post = ({ post, onDeletePost, onUpdatePost, users}) => {
                     <img src={post.img} alt="" />
                 </div>
                 <div className="info">
-                    <div className="item">
-                        {liked ? <FavoriteOutlinedIcon /> : <FavoriteBorderOutlinedIcon />}
-                        12 Likes
-                    </div>
                     <div className="item" onClick={()=>setCommentOpen(!commentOpen)}>
                         <TextsmsOutlinedIcon />
                         {post.comments.length}
-                    </div>
-                    <div className="item">
-                        <ShareOutlinedIcon />
-                        Share
                     </div>
                 </div>
                 {commentOpen && <Comments post={post} onUpdatePost={onUpdatePost} users={users} key={post._id}/>}

@@ -16,7 +16,7 @@ const Comments = ({post, onUpdatePost, users}) => {
     
     const handleAddComment = () => {
         const maxId = post.comments.reduce((max, comment) => Math.max(max, comment.id), 0);
-        const newComment = { id: maxId + 1, username: localStorage.getItem('user'), "text" : text, date: new Date()};
+        const newComment = { id: maxId + 1, username: localStorage.getItem('user'), "text" : text, "date": new Date(), "profileImage": user.img};
         const updatedComments = [...post.comments, newComment];
         updatePost(post._id, updatedComments);
     }
@@ -30,7 +30,7 @@ const Comments = ({post, onUpdatePost, users}) => {
         for (let i = 0; i < post.comments.length; i++) {
             for (let j = 0; j < users.length; j++) {
                 if (post.comments[i].username === users[j].username) {
-                    post.comments[i].profilePicture = users[j].img;
+                    post.comments[i].profileImage = users[j].img;
                 }
 
             }
@@ -83,7 +83,7 @@ const Comments = ({post, onUpdatePost, users}) => {
             {
             post.comments.map(comment=>(
                 <div key={comment.id} className="comment">
-                    <img src={comment.profilePicture} alt="" />
+                    <img src={comment.profileImage} alt="" />
                     <div className="info">
                         {localStorage.getItem('user') === comment.username ? (
                             <Link to={`/profile/${comment.username}`} style={{textDecoration:"none", color: "inherit"}}>
@@ -103,15 +103,15 @@ const Comments = ({post, onUpdatePost, users}) => {
                       <p>{comment.text}</p>
                     )}
                     </div>
-                    { currentUser === comment.username && (
-                    <MoreHorizIcon onClick={() => {setMenuOpen(!menuOpen); setMenuCommentId(comment.id)}} />)}
                     {menuOpen && comment.username === currentUser  && comment.id === menuCommentId && (
                         <button onClick={handleDeleteClick}>Delete</button>
                     )}
                     {menuOpen && comment.username === currentUser && comment.id === menuCommentId && (
                         <button onClick={() => handleEdit(comment.id, comment.text)}>Edit</button>
                     )}
-                    <span className="date">1 hour ago</span>
+                    { currentUser === comment.username && (
+                    <MoreHorizIcon onClick={() => {setMenuOpen(!menuOpen); setMenuCommentId(comment.id)}} />)}
+                    <span className="date">{new Date(comment.date).toLocaleDateString()}</span>
                 </div>
             ))
 
